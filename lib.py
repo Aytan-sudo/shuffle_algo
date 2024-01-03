@@ -25,6 +25,7 @@ class test_algo:
         self.algo = [
             algo.fisher_yates,
             algo.cut_in_half,
+            algo.cut_in_n,
         ]
         
     def test(self, deck):
