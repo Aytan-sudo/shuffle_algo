@@ -1,6 +1,16 @@
 import random
 import math
 
+class no_shuffle:
+    """
+    For evaluation, no shuffle
+    """
+    __name__ = "No shuffle"
+
+    @staticmethod
+    def shuffle(deck: list) -> list:
+        return deck
+
 
 class fisher_yates:
     """
@@ -29,17 +39,27 @@ class cut_in_half:
 
     @staticmethod
     def shuffle(deck: list) -> list:
-        j = int(math.log((len(deck)/2)-1))
-        f = random.randint(0, j)
-        deck_shuffle = []
-        for x in range(1,f):
-            for x in range(1, j):
-                    deck_shuffle.append(deck[x])
-                    deck_shuffle.append(deck[x+j])
+        deck_work = deck
+        j = int((len(deck)/2))
+        f = 2 + random.randint(0, int(math.log(j, 2)))
+        for x in range(0,f):
+            deck_shuffle = []
+            for x in range(0, j):
+                    deck_shuffle.append(deck_work[x+j])
+                    deck_shuffle.append(deck_work[x])
+            if (len(deck) % 2) != 0:
+                deck_shuffle.append(deck[len(deck)-1])
+            deck_work = deck_shuffle
         return deck_shuffle
 
 
 class cut_in_n:
+    """
+    The deck is cut into n pieces, and the elements in each piece are added one by one to the global list.
+    N is randomly chosen between 2 and half the size of the deck.
+    Randomness avoids determinism.
+    """
+
     __name__ = "Cut in N"
 
     @staticmethod
